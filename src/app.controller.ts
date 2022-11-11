@@ -21,9 +21,16 @@ export class AppController {
   @Get("/facebook/redirect")
   @UseGuards(AuthGuard("facebook"))
   async facebookLoginRedirect(@Req() req: Request): Promise<any> {
-    return {
-      statusCode: HttpStatus.OK,
-      data: req.user,
-    };
+    return this.appService.strategyLogin(req, 'facebook')
+  }
+
+  @Get("/google")
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req) {}
+
+  @Get('/google/redirect')
+  @UseGuards(AuthGuard('google'))
+  googleAuthRedirect(@Req() req) {
+    return this.appService.strategyLogin(req,'google')
   }
 }
